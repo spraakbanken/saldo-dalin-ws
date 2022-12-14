@@ -26,6 +26,7 @@ def function(format,lexeme):
         result_code=apache.OK
     except:
         result_code=apache.HTTP_SERVICE_UNAVAILABLE
+        return ('', result_code)
     if format == 'xml':
         result = xmlize(result)
     elif format=='protojs':

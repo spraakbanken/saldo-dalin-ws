@@ -1,8 +1,8 @@
 [tool.pdm]
 
 [project]
-name = ""
-version = ""
+name = "saldo-dalin-ws"
+version = "0.0.1"
 description = ""
 authors = [
     {name = "Kristoffer Andersson", email = "kod.kristoff@gmail.com"},

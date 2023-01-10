@@ -1,23 +1,21 @@
-# -*- mode: python; coding: utf-8 -*-
-# $Id: index.wsgi 65360 2013-01-16 16:55:42Z cjs $
 
-# WSGI-wrapper för saldo-ws
 
-import os, sys
-# FIXA: Fult som fan. Kanske ok i egen WSGI-server?
-if os.path.dirname(__file__) not in sys.path:
-   sys.path.insert(0, os.path.dirname(__file__))
+import logging
 
-from handler import handler
+from fastapi import FastAPI
 
-print('loading application ...')
+from webapp.api import saldo_ws
+# from handler import handler
 
-def application(environ, start_response):
-   print('environ = %s' % environ)
-   req = SaldoRequest(environ)
-   status = handler(req)
-   start_response(status, req.getHeaders())
-   return [req.getOutput()]
+logger = logging.getLogger(__name__)
+
+logger.info('loading application ...')
+
+def create_app():
+   app = FastAPI()
+
+   app.include_router(saldo_ws.api)
+   return app
 
 class SaldoRequest:
    def __init__(self, environ):

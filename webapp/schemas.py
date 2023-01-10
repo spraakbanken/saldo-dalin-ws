@@ -21,4 +21,4 @@ class Lexeme(str):
         return cls(v)
         
     def __repr__(self) -> str:
-        return f"Lexeme({self})"
+        return f"Lexeme({super().__repr__()})"

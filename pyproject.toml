@@ -1,21 +1,28 @@
-[tool.pdm]
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest>=7.2.0",
-    "httpx>=0.23.1",
-    "asgi-lifespan>=2.0.0",
-    "pytest-asyncio>=0.20.3",
-]
 
-[project]
+
+[tool.poetry]
 name = "saldo-dalin-ws"
 version = "0.0.1"
 description = ""
 authors = [
-    {name = "Kristoffer Andersson", email = "kod.kristoff@gmail.com"},
+    "Kristoffer Andersson <kristoffer.andersson@gu.se>",
 ]
-dependencies = [
-    "fastapi>=0.88.0",
-]
-requires-python = ">=3.10"
-license = {text = "MIT"}
+
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/spraakbanken/saldo-dalin-ws"
+packages = [{include = "webapp"}, {include="sblex"}]
+
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+fastapi="^0.89.0"
+pydantic = "^1.10.4"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+asgi-lifespan = "^2.0.0"
+pytest-asyncio = "^0.20.3"
+httpx = "^0.23.3"
+

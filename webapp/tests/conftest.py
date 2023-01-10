@@ -1,4 +1,5 @@
 import pytest
+import pytest_asyncio
 
 from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
@@ -11,7 +12,7 @@ from webapp.main import create_app
 def fixture_app() -> FastAPI:
     return create_app()
     
-@pytest.fixture
+@pytest_asyncio.fixture
 async def client(app: FastAPI) -> AsyncClient:
     async with LifespanManager(app):
         async with AsyncClient(

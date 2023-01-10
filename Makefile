@@ -39,7 +39,7 @@ test:
 
 .PHONY: test-w-coverage
 test-w-coverage:
-	poetry run pytest -vv --cov=sb_auth_jwt --cov-report=term-missing
+	poetry run pytest -vv --cov=webapp --cov=sblex --cov-report=xml
 
 .PHONY: lint
 lint:

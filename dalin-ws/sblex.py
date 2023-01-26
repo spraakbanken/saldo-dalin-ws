@@ -2,9 +2,9 @@
 #!/usr/bin/env python
 
 from xml.dom.minidom import parseString
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import saldo_util
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 
 def sblex(sense):
@@ -13,9 +13,9 @@ def sblex(sense):
     params={}
     params['lexikon'] = 'dalin'
     params['saldo'] = senses
-    data = urllib.urlencode(params)
-    req     = urllib2.Request(sblex_address,data)
-    content = urllib2.urlopen(req).read()
+    data = urllib.parse.urlencode(params)
+    req     = urllib.request.Request(sblex_address,data)
+    content = urllib.request.urlopen(req).read()
     dom = parseString(content)
     result = []
     for entry in dom.getElementsByTagName('LexicalEntry'):

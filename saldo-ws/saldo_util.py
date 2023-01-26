@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import utf8
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import cjson
 from mod_python import apache
 from mod_python import util 
@@ -70,10 +70,10 @@ def compare_paths(l1,p1,l2,p2):
     found = False
     if l1 > l2:
         dist = l1-l2
-        paths = zip(p1[dist:],p2)
+        paths = list(zip(p1[dist:],p2))
     else:
         dist = l2-l1
-        paths = zip(p1,p2[dist:])
+        paths = list(zip(p1,p2[dist:]))
     d = 0
     for (s1,s2) in paths:
         if s1 == s2:
@@ -122,7 +122,7 @@ def distances(senses):
     
 def inits(s):
     xs = []
-    for i in xrange(1,len(s)+1):
+    for i in range(1,len(s)+1):
         xs.append((s[:i],s[i:]))
     return xs
 
@@ -179,19 +179,19 @@ def lemma_href(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.quote(lid) + '">' + lemma_ref(lid) + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.parse.quote(lid) + '">' + lemma_ref(lid) + '</a>'
 
 def lemma_phref(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.quote(lid) + '">' + lemma_pref(lid) + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.parse.quote(lid) + '">' + lemma_pref(lid) + '</a>'
 
 def lexeme_ref(lids):
     if lids=='':
         return '*'
     else:
-        return "+".join(['<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.quote(lid) + '">' + prlex(lid) + '</a>' for lid in lids.split()])
+        return "+".join(['<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.parse.quote(lid) + '">' + prlex(lid) + '</a>' for lid in lids.split()])
 
 def not_fragment(param):
     for p in param.split(' '):
@@ -202,10 +202,10 @@ def lid_ref(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.quote(lid) + '">' + lid + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.parse.quote(lid) + '">' + lid + '</a>'
 
 def gen_ref(p,w,l):
-    return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/gen/html/%s/%s">%s</a>' %(urllib.quote(p),urllib.quote(w),l)
+    return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/gen/html/%s/%s">%s</a>' %(urllib.parse.quote(p),urllib.parse.quote(w),l)
 
 def graph(s):
     return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/graph/%s"><img src="https://svn.spraakdata.gu.se/repos/sblex/pub/images/prim_graph.png" /></a>' %(s.encode('UTF-8'))
@@ -219,7 +219,7 @@ def korpus_ref(lids,name):
         return ''
 
 def sms_ref(w,l):
-    return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/sms/html/%s">%s</a>' %(urllib.quote(w),l)
+    return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/sms/html/%s">%s</a>' %(urllib.parse.quote(w),l)
 
 def html_table(xss):
     result=''

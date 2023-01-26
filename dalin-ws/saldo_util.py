@@ -1,51 +1,51 @@
 # -*- coding: utf-8 -*-
 
 import utf8
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import cjson
 from mod_python import apache
 from mod_python import util 
 from xml.dom.minidom import parseString
 
 def dalin_exist(word):
-    url = 'http://litteraturbanken.se/query/dalin.xql?word=%s&limit=10' % urllib.quote(word)
-    s = urllib.urlopen(url).read()
+    url = 'http://litteraturbanken.se/query/dalin.xql?word=%s&limit=10' % urllib.parse.quote(word)
+    s = urllib.request.urlopen(url).read()
     dom = parseString(s)
     return "\n".join([n.toxml() for n in dom.getElementsByTagName('body')[0].childNodes])
 
 def lookup_ff(s):
     url = "http://spraakbanken.gu.se/ws/dalin-ws/ff/json/"
-    f = urllib.urlopen(url+urllib.quote(s))
+    f = urllib.request.urlopen(url+urllib.parse.quote(s))
     return cjson.decode(utf8.d(f.read()))['a']
 
 def lookup_fl(s):
     url = "http://spraakbanken.gu.se/ws/dalin-ws/fl/json/"
-    f = urllib.urlopen(url+urllib.quote(s))
+    f = urllib.request.urlopen(url+urllib.parse.quote(s))
     return cjson.decode(utf8.d(f.read()))
 
 def lookup_saldo_fl(s):
     url = "http://spraakbanken.gu.se/ws/saldo-ws/fl/json/"
-    f = urllib.urlopen(url+urllib.quote(s))
+    f = urllib.request.urlopen(url+urllib.parse.quote(s))
     return cjson.decode(utf8.d(f.read()))
 
 def lookup_eid(lid):
     url = "http://spraakbanken.gu.se/ws/dalin-ws/eid/json/"
-    f = urllib.urlopen(url+urllib.quote(lid))
+    f = urllib.request.urlopen(url+urllib.parse.quote(lid))
     return cjson.decode(utf8.d(f.read()))
 
 def lookup_lid(lid):
     url = "http://spraakbanken.gu.se/ws/dalin-ws/lid/json/"
-    f = urllib.urlopen(url+urllib.quote(lid))
+    f = urllib.request.urlopen(url+urllib.parse.quote(lid))
     return cjson.decode(utf8.d(f.read()))
 
 def lookup_saldo_lid(lid):
     url = "http://spraakbanken.gu.se/ws/saldo-ws/lid/json/"
-    f = urllib.urlopen(url+urllib.quote(lid))
+    f = urllib.request.urlopen(url+urllib.parse.quote(lid))
     return cjson.decode(utf8.d(f.read()))
 
 def lookup_table(p,w):
     url = "http://spraakbanken.gu.se/ws/dalin-ws/gen/json/"
-    f   = urllib.urlopen(url+urllib.quote(p)+'/'+urllib.quote(w))
+    f   = urllib.request.urlopen(url+urllib.parse.quote(p)+'/'+urllib.parse.quote(w))
     return cjson.decode(utf8.d(f.read()))
 
 def generate_wordforms(lemma_id):
@@ -61,7 +61,7 @@ def wordforms(sense_id):
 
 def lookup_md1(sense_id):
     url = "http://spraakbanken.gu.se/ws/saldo-ws/md1/json/"
-    f   = urllib.urlopen(url+urllib.quote(sense_id))
+    f   = urllib.request.urlopen(url+urllib.parse.quote(sense_id))
     return cjson.decode(utf8.d(f.read()))
 
 def md1(sense_id):
@@ -86,7 +86,7 @@ def md1_wordforms(sense_id):
 
 def inits(s):
     xs = []
-    for i in xrange(1,len(s)+1):
+    for i in range(1,len(s)+1):
         xs.append((s[:i],s[i:]))
     return xs
 
@@ -140,43 +140,43 @@ def lemma_href(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/eid/html/' + urllib.quote(lid) + '">' + lemma_ref(lid) + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/eid/html/' + urllib.parse.quote(lid) + '">' + lemma_ref(lid) + '</a>'
 
 def md1_ref(l):
     if l=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/md1/html/' + urllib.quote(l) + '">md1</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/md1/html/' + urllib.parse.quote(l) + '">md1</a>'
 
 def lb_ref(l):
     if l=='':
         return '*'
     else:
-        return ' <a href="http://spraakbanken.gu.se/ws/dalin-ws/lb/html/250/' + urllib.quote(l) + '">relaterade ord</a>'
+        return ' <a href="http://spraakbanken.gu.se/ws/dalin-ws/lb/html/250/' + urllib.parse.quote(l) + '">relaterade ord</a>'
 
 def lemma_hrefx(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/eid/html/' + urllib.quote(lid) + '">' + lid + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/eid/html/' + urllib.parse.quote(lid) + '">' + lid + '</a>'
 
 def lemma_phref(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/eid/html/' + urllib.quote(lid) + '">' + lemma_pref(lid) + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/eid/html/' + urllib.parse.quote(lid) + '">' + lemma_pref(lid) + '</a>'
 
 def lexeme_ref(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/lid/html/' + urllib.quote(lid) + '">' + prlex(lid) + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/lid/html/' + urllib.parse.quote(lid) + '">' + prlex(lid) + '</a>'
 
 def lexeme_saldo_ref(lid):
     if lid=='':
         return '*'
     else:
-        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.quote(lid) + '">' + prlex(lid) + '</a>'
+        return '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/' + urllib.parse.quote(lid) + '">' + prlex(lid) + '</a>'
 
 def not_fragment(param):
     for p in param.split(' '):
@@ -191,10 +191,10 @@ def lid_ref(word,lid):
         # return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/lid/html/' + urllib.quote(lid) + '">' + lid + '</a>'
 
 def gen_ref(p,w,l):
-    return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/gen/html/%s/%s">%s</a>' %(urllib.quote(p),urllib.quote(w),l)
+    return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/gen/html/%s/%s">%s</a>' %(urllib.parse.quote(p),urllib.parse.quote(w),l)
 
 def sms_ref(w,l):
-    return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/sms/html/%s">%s</a>' %(urllib.quote(w),l)
+    return '<a href="http://spraakbanken.gu.se/ws/dalin-ws/sms/html/%s">%s</a>' %(urllib.parse.quote(w),l)
 
 def html_table(xss):
     result=''
@@ -212,14 +212,14 @@ def korpus_ref(lids,name):
     for x in xs:
         if not (x in ys):
             ys.append(x)
-    wfs = '|'.join([urllib.quote(y.encode('UTF-8')) for y in ys])
+    wfs = '|'.join([urllib.parse.quote(y.encode('UTF-8')) for y in ys])
     if wfs == '':
         return ''
     else:
         return '<a href="http://litteraturbanken.se/#sok?forfattare=alla&titel=alla&antal=20&sortering=verk&fras=%s&traffsida=1">%s</a>' % (wfs,name)
 
 def korpus_wf_ref(words,name):
-    wfs = '|'.join([urllib.quote(w.encode('UTF-8')) for w in words])
+    wfs = '|'.join([urllib.parse.quote(w.encode('UTF-8')) for w in words])
     if wfs == '':
         return ''
     else:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import utf8
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import saldo_util
 import socket
 import cjson
@@ -29,7 +29,7 @@ def function(format,segment):
                 try:
                       list.append('{"id":"%s","fm":"%s","fp":"%s","l":"%s","gf":"%s","p":"%s"}' %(lex,lexdata['fm'],lexdata['fp'],lem,gf,p))
                 except:
-                      raise Exception, utf8.e(lex)
+                      raise Exception(utf8.e(lex))
         list.sort()
         result=utf8.e('[' + ',\n '.join(list) + ']')
         if format=='xml':

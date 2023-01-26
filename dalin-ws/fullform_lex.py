@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import utf8
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import saldo_util
 import socket
 import cjson

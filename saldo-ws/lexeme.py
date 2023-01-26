@@ -97,20 +97,20 @@ def sort_children(lexemes,mp):
             p = saldo_util.lookup_lid(utf8.e(l))['fp']
         else:
             p = saldo_util.lookup_lid(utf8.e(l))['fm']
-        if dict.has_key(p):
+        if p in dict:
             dict[p].append(l)
         else:
             dict[p] = [l]
     s='<table>'
     xs = []
-    if(dict.has_key('PRIM..1')):
+    if('PRIM..1' in dict):
         prim_lexs = dict['PRIM..1']
         del dict['PRIM..1']
-        xs = dict.items()
+        xs = list(dict.items())
         xs.sort()
         xs.insert(0,('PRIM..1',prim_lexs))
     else:
-        xs = dict.items()
+        xs = list(dict.items())
         xs.sort()
     for (p,xs) in xs:
           s+= '<tr><td style="vertical-align:middle;">' + saldo_util.prlex(p) + ' </td><td style="vertical-align:middle;">' + (" ".join([utf8.d(saldo_util.lexeme_ref(utf8.e(x))) for x in xs])) + '</td></tr>'

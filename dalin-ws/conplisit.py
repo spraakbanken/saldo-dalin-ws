@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import saldo_util
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import re
 import time
 import sblex
@@ -26,9 +26,9 @@ def request(words):
 
 def init_search(words):
     init_address = lb + '?username=sblex&action=search-init'
-    req          = urllib2.Request(url=init_address,data=request(words))
+    req          = urllib.request.Request(url=init_address,data=request(words))
     req.add_header('Content-Type', 'text/xml')
-    content    = urllib2.urlopen(req).read().decode('UTF-8')
+    content    = urllib.request.urlopen(req).read().decode('UTF-8')
     # the search parameters
     query_id   = re.findall(r'queryid>(.+)</query',content)[0]
     search_ref = re.findall(r'searchref>(.+)</searchref',content)[0]
@@ -37,21 +37,21 @@ def init_search(words):
 
 def start_search(query_id):
     go_address= lb + '?action=search-go&queryid=%s&username=sblex' % query_id
-    req = urllib2.Request(url=go_address)
-    urllib2.urlopen(req).read()
+    req = urllib.request.Request(url=go_address)
+    urllib.request.urlopen(req).read()
 
 def retrieve_data(search_ref,start,end):
     get_result_address= lb + '?action=get-result-set&searchref=%s&username=sblex&resultitem=%d&resultlength=%s' % (search_ref,start,end-start+1)
-    req = urllib2.Request(url=get_result_address)
-    return urllib2.urlopen(req).read()
+    req = urllib.request.Request(url=get_result_address)
+    return urllib.request.urlopen(req).read()
 
 def waiting_for_data(query_id, count):
     progress_address= lb + '?action=get-progress&queryid=%s&username=sblex' % query_id
     prog_patt = re.compile(r'progress>(.+)</progress')
     t = 1
     while t < 3:
-        req      = urllib2.Request(url=progress_address)
-        content  = urllib2.urlopen(req).read()
+        req      = urllib.request.Request(url=progress_address)
+        content  = urllib.request.urlopen(req).read()
         progress = int(prog_patt.findall(content)[0])
         if progress >= count:
             return progress

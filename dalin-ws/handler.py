@@ -22,7 +22,7 @@ def handler(req):
     # parse input
     cback = ''
     cgi_input = util.FieldStorage(req)
-    if cgi_input.has_key("input"):
+    if "input" in cgi_input:
         input = cgi_input["input"]
     else:
         return apache.HTTP_NOT_FOUND

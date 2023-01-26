@@ -70,7 +70,7 @@ def group_msd(j):
     for x in j:
        msd=x['param']
        wf=x['word']
-       if(dict.has_key(msd)):
+       if(msd in dict):
            dict[msd].append(wf)
        else:
            dict[msd]=[wf]

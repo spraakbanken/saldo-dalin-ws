@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from webapp.api import saldo_ws
+from sblex.webapp.api import saldo_ws
 
 
 router = APIRouter()

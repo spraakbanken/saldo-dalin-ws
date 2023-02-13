@@ -15,12 +15,11 @@ class LookupService(abc.ABC):
 
     def lookup_lid(self, lid):
         if is_lemma(lid):
-            ret = self.lookup_lemma(lid)
+            return self.lookup_lemma(lid)
         elif is_lexeme(lid):
-            ret = self.lookup_lexeme(lid)
+            return self.lookup_lexeme(lid)
         else:
-            ret = []
-        return ret
+            return []
 
     def md1(self, sense_id):
         xs = []

@@ -11,7 +11,13 @@ authors = [
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/spraakbanken/saldo-dalin-ws"
-packages = [{include = "sblex/webapp", from = "bases"}, {include="sblex/cliapp", from="bases"}]
+packages = [
+    {include = "sblex/webapp", from = "bases"},
+    {include = "sblex/cliapp", from = "bases"},
+    {include = "sblex/lookup", from = "components"},
+    {include = "sblex/schemas", from = "components"},
+    {include = "sblex/socket_lookup", from = "components"},
+]
 
 
 [tool.poetry.dependencies]

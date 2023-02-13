@@ -1,9 +1,9 @@
 import socket
 
-from sblex.application.services import LookupService
+from sblex.lookup import LookupService
 
 
-class SocketLookupService(LookkupService):
+class SocketLookupService(LookupService):
     def __init__(self,*, sem_port: int, host: str = "localhost", size: int = 2048):
         self.host = host
         self.sem_port = sem_port
@@ -11,31 +11,31 @@ class SocketLookupService(LookkupService):
 
     def lookup_lemma(self,lemma):
         result=''
-    	try:
-    		s=socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-    		s.connect((self.host,self.sem_port)) 
-    		s.send("lem "+lemma)
-    		buff = ''
-    		while True:
-    			buff = s.recv(self._size)
-    			if len(buff) == 0: 
+        try:
+            s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((self.host,self.sem_port))
+            s.send("lem "+lemma)
+            buff = ''
+            while True:
+                buff = s.recv(self._size)
+                if len(buff) == 0:
                     break
-    			result += buff
-    		s.close() 
-    		result_code=apache.OK
-    		if format == 'xml':
-    			result = xmlize(result)
-    		elif format == 'html':
-    			result = htmlize(lemma,result)
-    	except:
-    		result_code=apache.HTTP_SERVICE_UNAVAILABLE
-    	return (result,result_code)
+                result += buff
+            s.close()
+            result_code=apache.OK
+            if format == 'xml':
+                result = xmlize(result)
+            elif format == 'html':
+                result = htmlize(lemma,result)
+        except:
+            result_code=apache.HTTP_SERVICE_UNAVAILABLE
+        return (result,result_code)
 
     def lookup_lexeme(self,lexeme):
         result=''
         try:
-            s=socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-            s.connect((self.host,self.sem_port)) 
+            s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((self.host,self.sem_port))
             s.send("lex "+lexeme)
             buff = ''
             while True:
@@ -43,7 +43,7 @@ class SocketLookupService(LookkupService):
                 if len(buff) == 0:
                     break
                 result += buff
-            s.close() 
+            s.close()
             result_code=apache.OK
         except:
             result_code=apache.HTTP_SERVICE_UNAVAILABLE

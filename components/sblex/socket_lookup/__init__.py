@@ -1,3 +1,3 @@
-from sblex.socket_lookup import core
+from sblex.socket_lookup.core import SocketLookupService
 
-__all__ = ["core"]
+__all__ = ["SocketLookupService"]

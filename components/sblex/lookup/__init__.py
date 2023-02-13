@@ -1,3 +1,3 @@
-from sblex.lookup import core
+from sblex.lookup.core import LookupService
 
-__all__ = ["core"]
+__all__ = ["LookupService"]

@@ -6,8 +6,8 @@ from fastapi.responses import HTMLResponse
 
 
 
-from webapp.responses import XMLResponse
-from webapp.schemas import Lexeme
+from sblex.webapp.responses import XMLResponse
+from sblex.schemas import Lexeme
 
 
 router = APIRouter()
@@ -59,5 +59,5 @@ def xmlize(xs: list) -> bytes:
     xml += '<result>\n'
     for x in xs:
         xml += '<l>' + x + '</l>\n'
-    xml += '</result>\n'                                        
+    xml += '</result>\n'
     return xml.encode("utf-8")

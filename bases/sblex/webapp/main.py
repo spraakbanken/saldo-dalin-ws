@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from webapp import api
+from sblex.webapp import api
 
 
 def create_app():

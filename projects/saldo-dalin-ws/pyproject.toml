@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "saldo-dalin-ws"
+version = "0.1.0"
+description = ""
+authors = ["Kristoffer Andersson <kod.kristoff@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+  {include = "sblex/webapp", from = "../../bases" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,5 +1,6 @@
 from sblex.predicates.core import is_lexeme
 
+
 class Lexeme(str):
     @classmethod
     def __get_validators__(cls):

@@ -1,3 +1,3 @@
-from sblex.lookup.core import LookupService
+from sblex.lookup.core import LookupService, LookupServiceError
 
-__all__ = ["LookupService"]
+__all__ = ["LookupService", "LookupServiceError"]

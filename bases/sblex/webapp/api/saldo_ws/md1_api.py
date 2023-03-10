@@ -1,9 +1,11 @@
-
 from fastapi import (
-    APIRouter, Body, Depends, status, HTTPException,
+    APIRouter,
+    Body,
+    Depends,
+    status,
+    HTTPException,
 )
 from fastapi.responses import HTMLResponse
-
 
 
 from sblex.webapp.responses import XMLResponse
@@ -11,8 +13,6 @@ from sblex.schemas import Lexeme
 
 
 router = APIRouter()
-
-
 
 
 @router.get("/json/{arg}")
@@ -56,8 +56,8 @@ async def calculate_md1_xml(
 
 def xmlize(xs: list) -> bytes:
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-    xml += '<result>\n'
+    xml += "<result>\n"
     for x in xs:
-        xml += '<l>' + x + '</l>\n'
-    xml += '</result>\n'
+        xml += "<l>" + x + "</l>\n"
+    xml += "</result>\n"
     return xml.encode("utf-8")

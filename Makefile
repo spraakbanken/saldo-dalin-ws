@@ -43,7 +43,7 @@ test-w-coverage:
 
 .PHONY: lint
 lint:
-	poetry run pylint --rcfile=.pylintrc sb_auth_jwt tests
+	poetry run ruff sb_auth_jwt tests
 
 fmt:
 	poetry run black .

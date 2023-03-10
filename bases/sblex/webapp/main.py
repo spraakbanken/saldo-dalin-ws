@@ -18,5 +18,3 @@ def create_app():
     app.include_router(api.router)
 
     return app
-
-

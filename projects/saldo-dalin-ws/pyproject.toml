@@ -6,11 +6,15 @@ authors = ["Kristoffer Andersson <kod.kristoff@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [
+  {include = "sblex/cliapp", from = "../../bases" },
   {include = "sblex/webapp", from = "../../bases" }
 ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+typer = "^0.7.0"
+fastapi = "^0.93.0"
+python-dotenv = "^1.0.0"
 
 
 [build-system]

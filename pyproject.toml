@@ -22,9 +22,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10"
-fastapi="^0.89.0"
+fastapi="^0.93.0"
 pydantic = "^1.10.4"
 orjson = "^3.8.7"
+typer = "^0.7.0"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.2.0"
@@ -32,6 +34,9 @@ pytest-cov = "^4.0.0"
 asgi-lifespan = "^2.0.0"
 pytest-asyncio = "^0.20.3"
 httpx = "^0.23.3"
+
+[tool.poetry.scripts]
+saldo-cli = "sblex.cliapp:app"
 
 [tool.black]
 target-version = ["py310"]

@@ -1,3 +1,3 @@
-from sblex.cliapp import core
+from sblex.cliapp.core import app
 
-__all__ = ["core"]
+__all__ = ["app"]

@@ -1,11 +1,12 @@
 import abc
+from typing import Any
 
 from sblex.predicates import is_lemma, is_lexeme
 
 
 class LookupService(abc.ABC):
     @abc.abstractmethod
-    def lookup_lemma(self, lid: str):
+    def lookup_lemma(self, lid: str) -> dict[str, Any]:
         """Lookup lemma.
 
         Raises
@@ -16,7 +17,7 @@ class LookupService(abc.ABC):
         ...
 
     @abc.abstractmethod
-    def lookup_lexeme(self, lid: str):
+    def lookup_lexeme(self, lid: str) -> dict[str, Any]:
         """Lookup lemma.
 
         Raises
@@ -26,13 +27,13 @@ class LookupService(abc.ABC):
         """
         ...
 
-    def lookup_lid(self, lid: str):
+    def lookup_lid(self, lid: str) -> dict[str, Any]:
         if is_lemma(lid):
             return self.lookup_lemma(lid)
         elif is_lexeme(lid):
             return self.lookup_lexeme(lid)
         else:
-            return []
+            return {}
 
     def md1(self, sense_id):
         xs = []

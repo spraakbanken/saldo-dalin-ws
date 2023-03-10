@@ -1,7 +1,8 @@
 import socket
+from typing import Any
 
-from sblex.lookup import LookupService
-from sblex.lookup import LookupServiceError
+import orjson
+from sblex.lookup import LookupService, LookupServiceError
 
 
 class SocketLookupService(LookupService):
@@ -10,7 +11,7 @@ class SocketLookupService(LookupService):
         self.sem_port = sem_port
         self._size = size
 
-    def lookup_lemma(self, lemma: str):
+    def lookup_lemma(self, lemma: str) -> dict[str, Any]:
         result = b""
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,16 +24,11 @@ class SocketLookupService(LookupService):
                     break
                 result += buff
             s.close()
-            result_code = apache.OK
-            if format == "html":
-                result = htmlize(lemma, result)
-            elif format == "xml":
-                result = xmlize(result)
         except Exception as e:
-            raise LookupServiceError
-        return (result, result_code)
+            raise LookupServiceError(str(e)) from e
+        return orjson.loads(result)
 
-    def lookup_lexeme(self, lexeme):
+    def lookup_lexeme(self, lexeme) -> dict[str, Any]:
         result = b""
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

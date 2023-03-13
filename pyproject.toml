@@ -15,6 +15,8 @@ packages = [
     {include = "sblex/webapp", from = "bases"},
     {include = "sblex/cliapp", from = "bases"},
     {include = "sblex/lookup", from = "components"},
+    {include = "sblex/trie", from = "components"},
+    {include = "sblex/fm", from = "components"},
     {include = "sblex/schemas", from = "components"},
     {include = "sblex/socket_lookup", from = "components"},
 ]
@@ -27,6 +29,7 @@ pydantic = "^1.10.4"
 orjson = "^3.8.7"
 typer = "^0.7.0"
 python-dotenv = "^1.0.0"
+json_streams = "^0.12.4"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.2.0"

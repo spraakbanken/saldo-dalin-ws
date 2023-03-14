@@ -1,11 +1,15 @@
 
+from typing import Any
+
+
 class Trie:
     def __init__(self):
-        self.trie     = {0:({},[])} 
+        self.trie: dict[int, tuple[dict[str, int], list[bytes]]]     = {0:({},[])}
         self.state    = 0 # state counter
         self.count    = 0 # number of insertions
+        self.trie_precomputed: dict[int, tuple[dict[str, int], bytes]] = {}
 
-    def insert(self,word,decoration):
+    def insert(self,word: str,decoration: bytes):
         self.count += 1
         st = 0 # traversal state
         for i in range(len(word)):
@@ -17,37 +21,38 @@ class Trie:
         self.trie[st][1].append(decoration)
 
     # create a new branch
-    def complete(self,st,word,decoration):
+    def complete(self,st: int,word: str,decoration: bytes):
         for c in word:
             self.state += 1
             self.trie[st][0][c]   = self.state
             self.trie[self.state] = ({},[])
-            st                    = self.state            
+            st                    = self.state
         self.trie[st][1].append(decoration)
 
-    def lookup(self,word,start_state=0):
-        st = start_state # traversal state 
+    def lookup(self,word: str,start_state=0) -> bytes:
+        st = start_state # traversal state
         for c in word:
             try:
                 st =self.trie[st][0][c]
             except:
-                return ''
-        return self.trie[st][1]
+                return b''
+        return self.trie_precomputed[st][1]
 
-    def continuation(self,state):
+    def continuation(self,state: int):
         return list(self.trie[state][0].keys())
 
     def number_of_insertions(self):
         return self.count
 
     def precompute(self):
-        for i in range(0,self.state+1):
+        for i in range(self.state+1):
             tr  = self.trie[i][0]
             dec = self.trie[i][1]
-            ys  = [x.encode('UTF-8') for x in dec]
-            cont = ("".join(self.continuation(i))).encode('UTF-8')            
-            self.trie[i] = (tr,'{\n"a":[%s],\n"c":"%s"}' % (wrap(",\n".join(ys)), cont))
+            # ys  = [x.encode('UTF-8') for x in dec]
+            ys  = [x for x in dec]
+            cont = ("".join(self.continuation(i))).encode('UTF-8')
+            self.trie_precomputed[i] = (tr,b'{\n"a":[%s],\n"c":"%s"}' % (wrap(b",\n".join(ys)), cont))
 
-def wrap(s):
-    if(len(s) > 0) : return '\n'+s+'\n'
+def wrap(s: bytes) -> bytes:
+    if(len(s) > 0) : return b'\n'+s+b'\n'
     else           : return s

@@ -23,7 +23,7 @@ packages = [
 
 
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = "^3.10"
 fastapi="^0.93.0"
 pydantic = "^1.10.4"
 orjson = "^3.8.7"

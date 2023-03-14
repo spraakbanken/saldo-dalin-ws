@@ -9,7 +9,7 @@ from sblex.trie import trie
 class JsonIterator:
     def __init__(self,fname):
         self.f = open(fname,'r',encoding='utf-8')
-        
+
     def __next__(self):
         s = self.f.readline()
         if(s==''):
@@ -45,7 +45,7 @@ class Morphology:
                 "is":j["inhs"],
                 "msd":j["param"],
                 "p":j["p"]
-            } 
+            }
             # % ("%s%s%s" % (
             #         cit(j['inhs']),
             #         '","'.join(j['inhs']),
@@ -58,7 +58,7 @@ class Morphology:
         print("initiating precomputation...")
         self.trie.precompute()
         print("done")
-        
+
     def lookup(self,s: bytes) -> bytes:
         try:
             res = s.decode('UTF-8').split(' ',1)

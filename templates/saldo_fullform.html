@@ -1,0 +1,18 @@
+{% extends "saldo_document.html" %}
+{% block content %}
+<center><p>segment: {{ segment }}</p>
+<p>continuations:  {{ j["c"] }} </p>
+<table border="1">
+<tr><th>gf</th><th>id</th><th>pos</th><th>is</th><th>msd</th><th>p</th></tr>
+{% for a in j["a"] %}
+<tr>
+<td>{{ a["gf"] }}</td>
+<td><a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/{{ a["id"]|e }}">{{ a["id"] }}</a></td>
+<td>{{a["pos"]}}</td>
+<td>{{a["is"]|join(" ")}}</td>
+<td>{{a["msd"]}}</td>
+<td>{{a["p"]}}</td>
+</tr>
+{% endfor %}
+</center>
+{% endblock %}

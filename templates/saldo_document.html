@@ -1,0 +1,30 @@
+<html>
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <link rel="shortcut icon" href="https://svn.spraakdata.gu.se/sb-arkiv/pub/images/saldo_icon.png">
+  <link rel="stylesheet" type="text/css" href="http://demo.spraakdata.gu.se/markus/saldo.css" />
+  <title>{{ title }}</title>
+ </head>
+ <body OnLoad="document.getElementById('input').focus();">
+  <center>
+   <p>
+    <a href="http://spraakbanken.gu.se/saldo"><img src="http://spraakbanken.gu.se/sites/spraakbanken.gu.se/files/img/saldo/saldo.gif" align="top" alt="SALDO" /></a>
+   </p>
+   <script>
+   function input_handler(e){
+    var word = document.getElementById('input').value;
+     if(word.length > 0){
+      location.href='http://spraakbanken.gu.se/ws/saldo-ws/{{ service }}/html/'+encodeURIComponent(word);
+     }
+   }
+   </script>
+   <p><a href="https://svn.spraakdata.gu.se/repos/sblex/pub/saldo_instruktion.pdf">dokumentation (pdf)</a></p>
+   <p>
+   <input type="search" id="input" class="inputclass" value="{{ input }}" size="30" placeholder="Skriv in en ordform" results="10" onchange="input_handler(event)">
+   <input type="submit" value="skicka" onchange="input_handler(event)"> </p>
+  </center>
+  <div id="output_table">
+  {% block content %}{% endblock %}
+  </div>
+ </body>
+</html>

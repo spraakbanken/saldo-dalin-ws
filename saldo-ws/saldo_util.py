@@ -111,7 +111,7 @@ def compare_paths(l1, p1, l2, p2):
         dist = l2 - l1
         paths = list(zip(p1, p2[dist:]))
     d = 0
-    for (s1, s2) in paths:
+    for s1, s2 in paths:
         if s1 == s2:
             found = True
             if dist == 0:
@@ -141,7 +141,7 @@ def compute_distance(s1, s2, path_dict):
 def diag(senses):
     hist = set([])
     pairs = []
-    for (s1, s2) in [(s1, s2) for s1 in senses for s2 in senses if s1 != s2]:
+    for s1, s2 in [(s1, s2) for s1 in senses for s2 in senses if s1 != s2]:
         if (s1, s2) not in hist:
             pairs.append((s1, s2))
             hist.add((s1, s2))
@@ -271,17 +271,7 @@ def not_fragment(param):
     return True
 
 
-def lid_ref(lid):
-    if lid == "":
-        return "*"
-    else:
-        return (
-            '<a href="http://spraakbanken.gu.se/ws/saldo-ws/lid/html/'
-            + urllib.parse.quote(lid)
-            + '">'
-            + lid
-            + "</a>"
-        )
+
 
 
 def gen_ref(p, w, l):
@@ -329,53 +319,6 @@ def html_table(xss):
     return result
 
 
-def html_document(title, content, input="", bar=True, service="fl"):
-    s = (
-        """
-<html>
- <head>
-  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-  <link rel="shortcut icon" href="https://svn.spraakdata.gu.se/sb-arkiv/pub/images/saldo_icon.png">
-  <link rel="stylesheet" type="text/css" href="http://demo.spraakdata.gu.se/markus/saldo.css" />
-  <title>%s</title>
- </head>
- <body OnLoad="document.getElementById('input').focus();">
-  <center>
-   <p>
-    <a href="http://spraakbanken.gu.se/saldo"><img src="http://spraakbanken.gu.se/sites/spraakbanken.gu.se/files/img/saldo/saldo.gif" align="top" alt="SALDO" /></a>
-   </p>"""
-        % title
-    )
-    if bar:
-        s += """
-   <script>
-   function input_handler(e){
-    var word = document.getElementById('input').value;
-     if(word.length > 0){
-      location.href='http://spraakbanken.gu.se/ws/saldo-ws/%s/html/'+encodeURIComponent(word);
-     }
-   }
-   </script>
-   <p><a href="https://svn.spraakdata.gu.se/repos/sblex/pub/saldo_instruktion.pdf">dokumentation (pdf)</a></p>
-   <p>
-   <input type="search" id="input" class="inputclass" value="%s" size="30" placeholder="Skriv in en ordform" results="10" onchange="input_handler(event)">
-   <input type="submit" value="skicka" onchange="input_handler(event)"> </p>
-  </center>""" % (
-            service,
-            input,
-        )
-    s += (
-        """
-  <div id="output_table">
-  %s
-  </div>
- </body>
-</html>"""
-        % content
-    )
-    return s
-
-
 def html_pdocument(title, content, input="", bar=True):
     s = (
         """
@@ -406,7 +349,7 @@ def html_pdocument(title, content, input="", bar=True):
    </script>
    <p><a href="https://svn.spraakdata.gu.se/repos/sblex/pub/saldo_instruktion.pdf">dokumentation (pdf)</a></p>
    <p>
-   <input type="search" id="input" class="inputclass" value="%s" size="30" placeholder="Skriv in en ordform" results="10" onchange="input_handler(event)"> 
+   <input type="search" id="input" class="inputclass" value="%s" size="30" placeholder="Skriv in en ordform" results="10" onchange="input_handler(event)">
    <input type="submit" value="skicka" onchange="input_handler(event)"> <p/>
    </center>"""
             % input

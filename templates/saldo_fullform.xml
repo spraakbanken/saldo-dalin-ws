@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result>
+    <c>{{ j["c"] }}</c>
+    <as>
+{% for a in j["a"] %}
+        <a>
+        <gf>{{ a["gf"] }}</gf>
+        <id>{{ a["id"] }}</id>
+        <pos>{{ a["pos"] }}</pos>
+        <is>{{ a["is"]|join(" ") }}</is>
+        <msd>{{ a["msd"] }}</msd>
+        <p>{{ a["p"] }}</p>
+        </a>
+{% endfor %}
+    </as>
+</result>

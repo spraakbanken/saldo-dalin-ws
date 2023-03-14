@@ -12,15 +12,19 @@ install-dev:
 install:
 	poetry install --only main
 
-# run all tests
-test:
-	{{INVENV}} pytest -vv
 
+
+default-cov := "--cov=sblex"
 cov-report := "term-missing"
+cov := default-cov
 
-# run all tests with coverage information
-test-w-coverage:
-	{{INVENV}} pytest -vv --cov=sblex --cov-report={{cov-report}}
+# run given test(s)
+test *tests="test/component":
+	{{INVENV}} pytest -vv {{tests}}
+
+# run given test(s) with coverage information
+test-w-coverage +tests="test":
+	{{INVENV}} pytest -vv {{cov}} --cov-report={{cov-report}} {{tests}}
 
 # lint all code
 lint:

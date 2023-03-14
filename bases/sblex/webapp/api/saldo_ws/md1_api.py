@@ -2,15 +2,12 @@ from fastapi import (
     APIRouter,
     Body,
     Depends,
-    status,
     HTTPException,
+    status,
 )
 from fastapi.responses import HTMLResponse
-
-
-from sblex.webapp.responses import XMLResponse
 from sblex.schemas import Lexeme
-
+from sblex.webapp.responses import XMLResponse
 
 router = APIRouter()
 
@@ -44,7 +41,7 @@ async def calculate_md1_xml(
     "/html/{arg}",
     response_class=HTMLResponse,
 )
-async def calculate_md1_xml(
+async def calculate_md1_html(
     arg: Lexeme,
 ):
     xs = [

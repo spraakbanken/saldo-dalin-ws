@@ -1,4 +1,3 @@
-from sblex.schemas.core import Lexeme
+from sblex.schemas.core import Lemma, Lexeme
 
-
-__all__ = ["Lexeme"]
+__all__ = ["Lexeme", "Lemma"]

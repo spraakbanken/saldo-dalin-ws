@@ -1,0 +1,10 @@
+_1984..1	roman..1	dystopi..1	_1984..pm.1	1984	pm	pm_uwb_hemsöborna
+_1984..1	roman..1	dystopi..1	nittonhundraåttiofyra..pm.1	nittonhundraåttiofyra	pm	pm_uwb_hemsöborna
+_1984..1	roman..1	dystopi..1	Nittonhundraåttiofyra..pm.1	Nittonhundraåttiofyra	pm	pm_uwb_hemsöborna
+a..1	bokstav..1	PRIM..1	a..nn.1	a	nn	nn_vn_alfa_abc
+A..1	initial..1	PRIM..1	A..nn.1	A	nn	nn_vn_alfa_abc
+à..1	per..1	PRIM..1	á..pp.1	á	pp	pp_i_i
+à..1	per..1	PRIM..1	à..pp.1	à	pp	pp_i_i
+a..2	ton..1	PRIM..1	a..nn.1	a	nn	nn_vn_alfa_abc
+A3..1	pappersark..1	PRIM..1	a3..nna.1	a3	nna	nna_0n_hk
+A3..1	pappersark..1	PRIM..1	A3..nna.1	A3	nna	nna_0n_hk

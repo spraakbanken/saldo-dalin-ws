@@ -11,7 +11,7 @@ class SocketSemanticRepository(SemanticRepository):
         self.sem_port = sem_port
         self._size = size
 
-    def lookup_lemma(self, lemma: str) -> dict[str, Any]:
+    def get_lemma(self, lemma: str) -> dict[str, Any]:
         result = b""
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,7 +28,7 @@ class SocketSemanticRepository(SemanticRepository):
             raise SemanticRepositoryError(str(e)) from e
         return orjson.loads(result)
 
-    def lookup_lexeme(self, lexeme) -> dict[str, Any]:
+    def get_lexeme(self, lexeme) -> dict[str, Any]:
         result = b""
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

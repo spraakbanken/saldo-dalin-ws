@@ -1,17 +1,19 @@
 from typing import AsyncGenerator
+
 import pytest
 import pytest_asyncio
-
 from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
 from httpx import AsyncClient
-
 from sblex.webapp.main import create_app
 
 
 @pytest.fixture(name="app")
 def fixture_app() -> FastAPI:
-    return create_app()
+    return create_app(config={
+        "SALDO_MORPHOLOGY_PATH": "assets/testing/saldo.lex",
+        "SALDO_SEMANTIC_PATH": "assets/testing/saldo.txt",
+    })
 
 
 @pytest_asyncio.fixture

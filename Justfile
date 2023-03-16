@@ -19,7 +19,7 @@ cov-report := "term-missing"
 cov := default-cov
 
 # run given test(s)
-test *tests="test/component":
+test *tests="test/components":
 	{{INVENV}} pytest -vv {{tests}}
 
 # run given test(s) with coverage information

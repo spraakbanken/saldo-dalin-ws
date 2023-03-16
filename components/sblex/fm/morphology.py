@@ -1,9 +1,13 @@
 """FM morphology."""
+import logging
 
 import json_streams
 from json_streams import jsonlib
 
 from sblex.trie import trie
+
+
+logger = logging.getLogger(__name__)
 
 
 class JsonIterator:
@@ -33,6 +37,9 @@ class Morphology:
         self.lexicon = JsonIterator(fname)
         self.trie    = trie.Trie()
 
+    @classmethod
+    def from_path(cls, fname) -> "Morphology":
+        
     def build(self):
         print("building morphology structure... (takes about 1 minute)")
         for j in json_streams.load_from_file(self.fname, json_format="jsonl"):

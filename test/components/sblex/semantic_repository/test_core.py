@@ -1,4 +1,4 @@
-from sblex.socket_lookup import core
+from sblex.semantic_repository import core
 
 
 def test_sample():

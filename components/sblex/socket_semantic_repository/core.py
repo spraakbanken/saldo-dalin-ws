@@ -2,10 +2,10 @@ import socket
 from typing import Any
 
 import orjson
-from sblex.lookup import LookupService, LookupServiceError
+from sblex.semantic_repository import SemanticRepository, SemanticRepositoryError
 
 
-class SocketLookupService(LookupService):
+class SocketSemanticRepository(SemanticRepository):
     def __init__(self, *, sem_port: int, host: str = "localhost", size: int = 2048):
         self.host = host
         self.sem_port = sem_port
@@ -25,7 +25,7 @@ class SocketLookupService(LookupService):
                 result += buff
             s.close()
         except Exception as e:
-            raise LookupServiceError(str(e)) from e
+            raise SemanticRepositoryError(str(e)) from e
         return orjson.loads(result)
 
     def lookup_lexeme(self, lexeme) -> dict[str, Any]:

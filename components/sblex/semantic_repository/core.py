@@ -4,45 +4,45 @@ from typing import Any
 from sblex.predicates import is_lemma, is_lexeme
 
 
-class LookupService(abc.ABC):
+class SemanticRepository(abc.ABC):
     @abc.abstractmethod
-    def lookup_lemma(self, lid: str) -> dict[str, Any]:
-        """Lookup lemma.
+    def get_lemma(self, lid: str) -> dict[str, Any]:
+        """Get lemma with given `lid`.
 
         Raises
         ------
-        LookupServiceError
+        SemanticRepositoryError
             custom error
         """
         ...
 
     @abc.abstractmethod
-    def lookup_lexeme(self, lid: str) -> dict[str, Any]:
-        """Lookup lemma.
+    def get_lexeme(self, lid: str) -> dict[str, Any]:
+        """Get lexeme with given `lid`.
 
         Raises
         ------
-        LookupServiceError
+        SemanticRepositoryError
             custom error
         """
         ...
 
-    def lookup_lid(self, lid: str) -> dict[str, Any]:
+    def get_by_lid(self, lid: str) -> dict[str, Any]:
         if is_lemma(lid):
-            return self.lookup_lemma(lid)
+            return self.get_lemma(lid)
         elif is_lexeme(lid):
-            return self.lookup_lexeme(lid)
+            return self.get_lexeme(lid)
         else:
             return {}
 
     def md1(self, sense_id):
         xs = []
         sib = []
-        res = self.lookup_lid(sense_id)
+        res = self.get_by_lid(sense_id)
         if res == []:
             return []
         if res["fm"] != "PRIM..1":
-            sib = self.lookup_lid(res["fm"])["mf"]
+            sib = self.get_by_lid(res["fm"])["mf"]
             xs = [res["fm"]]
         md1 = xs + sib + res["mf"]
         #    wf = []
@@ -51,5 +51,5 @@ class LookupService(abc.ABC):
         return list(set(md1))
 
 
-class LookupServiceError(Exception):
-    """Raised when the LookupService fails."""
+class SemanticRepositoryError(Exception):
+    """Raised when the SemanticRepository fails."""

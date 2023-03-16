@@ -3,7 +3,7 @@ from typing import Optional
 
 import dotenv
 import typer
-from sblex.socket_lookup.core import SocketLookupService
+from sblex.socket_semantic_repository import SocketSemanticRepository
 
 __version__ = "0.0.1"
 app = typer.Typer(help="SALDO/DALIN-WS CLI")
@@ -34,5 +34,5 @@ def lookup_lemma(lemma: str) -> None:
     lemma : str
         lemma to lookup
     """
-    lookup_service = SocketLookupService(sem_port=int(os.environ["SALDO_SEM_PORT"]))
+    lookup_service = SocketSemanticRepository(sem_port=int(os.environ["SALDO_SEM_PORT"]))
     print(lookup_service.lookup_lemma(lemma=lemma))

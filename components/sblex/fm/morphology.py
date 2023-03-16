@@ -1,73 +1,29 @@
 """FM morphology."""
 
+import logging
 from typing import Any
+
 import json_streams
 from json_streams import jsonlib
+from sblex.trie import Trie
 
-from sblex.trie import trie
-
-
-class JsonIterator:
-    def __init__(self, fname):
-        self.f = open(fname, "r", encoding="utf-8")
-
-    def __next__(self):
-        s = self.f.readline()
-        if s == "":
-            self.f.close()
-            raise StopIteration
-        j = cjson.decode(s)
-        return j
-
-    def __iter__(self):
-        return self
-
-
-def cit(xs):
-    if xs == []:
-        return ""
-    else:
-        return '"'
-
+logger = logging.getLogger(__name__)
 
 class Morphology:
-    def __init__(self, fname):
-        self.fname = fname
-        self.lexicon = JsonIterator(fname)
-        self.trie = trie.Trie()
+    def __init__(self, trie: Trie) -> None:
+        self._trie = trie
 
-    def build(self):
-        print("building morphology structure... (takes about 1 minute)")
-        for j in json_streams.load_from_file(self.fname, json_format="jsonl"):
-            w = j["word"]
-            # a = '{"gf":"%s","id":"%s","pos":"%s","is":[%s],"msd":"%s","p":"%s"}' % (j['head'],j['id'],j['pos'],"%s%s%s" % (cit(j['inhs']),'","'.join(j['inhs']),cit(j['inhs'])),j['param'],j['p'])
-            a = {
-                "gf": j["head"],
-                "id": j["id"],
-                "pos": j["pos"],
-                "is": j["inhs"],
-                "msd": j["param"],
-                "p": j["p"],
-            }
-            # % ("%s%s%s" % (
-            #         cit(j['inhs']),
-            #         '","'.join(j['inhs']),
-            #         cit(j['inhs'])),
-            #     j['param'],
-            #     j['p'])
-            self.trie.insert(w, jsonlib.dumps(a))
-        print("number of word forms read: ", end=" ")
-        print(self.trie.number_of_insertions())
-        print("initiating precomputation...")
-        self.trie.precompute()
-        print("done")
+    @classmethod
+    def from_path(cls, fname: str) -> "Morphology":
+        logger.info("building morphology structure... (takes about 1 minute)")
+        return cls(trie=Trie.from_iter(json_streams.load_from_file(fname, json_format="jsonl")))
 
     def lookup(self, s: bytes) -> bytes:
         try:
             res = s.decode("UTF-8").split(" ", 1)
             n = int(res[0])
             word = res[1]
-            if r := self.trie.lookup(word, n):
+            if r := self._trie.lookup(word, n):
                 return r
         except:
             pass

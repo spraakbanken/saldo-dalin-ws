@@ -1,3 +1,3 @@
-from sblex.trie import core
+from sblex.trie.trie import Trie
 
-__all__ = ["core"]
+__all__ = ["Trie"]

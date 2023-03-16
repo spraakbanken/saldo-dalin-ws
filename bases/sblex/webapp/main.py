@@ -13,7 +13,9 @@ def create_app(config: dict | None = None):
         config = load_config()
 
     app.state.config = config
-    app.state.templates = Jinja2Templates(directory=config.get("APP_TEMPLATES", "templates"))
+    app.state.templates = Jinja2Templates(
+        directory=config.get("APP_TEMPLATES", "templates")
+    )
 
     app.add_middleware(
         CORSMiddleware,

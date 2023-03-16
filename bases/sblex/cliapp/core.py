@@ -34,5 +34,7 @@ def lookup_lemma(lemma: str) -> None:
     lemma : str
         lemma to lookup
     """
-    lookup_service = SocketSemanticRepository(sem_port=int(os.environ["SALDO_SEM_PORT"]))
+    lookup_service = SocketSemanticRepository(
+        sem_port=int(os.environ["SALDO_SEM_PORT"])
+    )
     print(lookup_service.lookup_lemma(lemma=lemma))

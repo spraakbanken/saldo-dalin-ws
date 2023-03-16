@@ -33,12 +33,11 @@ async def fullform_xml(
 
     return templates.TemplateResponse(
         "saldo_fullform.xml",
-
         context={
             "request": request,
-            "j": jsonlib.loads(morphology.lookup(f"0 {fragment}".encode("utf-8")))
+            "j": jsonlib.loads(morphology.lookup(f"0 {fragment}".encode("utf-8"))),
         },
-        media_type="application/xml"
+        media_type="application/xml",
     )
 
 
@@ -55,7 +54,6 @@ async def fullform_html(
 
     return templates.TemplateResponse(
         "saldo_fullform.html",
-
         {
             "request": request,
             "title": fragment,
@@ -65,6 +63,5 @@ async def fullform_html(
             "segment": fragment,
             "j": jsonlib.loads(morphology.lookup(f"0 {fragment}".encode("utf-8")))
             # "content": htmlize(fragment, morphology.lookup(f"0 {fragment}".encode("utf-8")))
-        }
+        },
     )
-

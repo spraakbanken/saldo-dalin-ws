@@ -21,8 +21,6 @@ class TestSaldoWsMd1Routes:
 
 
 class TestSaldoWsFullformRoutes:
-
-
     @pytest.mark.parametrize(
         "fragment, expected",
         [

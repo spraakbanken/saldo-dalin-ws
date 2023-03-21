@@ -3,8 +3,7 @@ from sblex.fm.morphology import Morphology
 
 
 def test_morphology_exists() -> None:
-    morphology = Morphology("assets/testing/dalin.lex")
-    morphology.build()
+    morphology = Morphology.from_path("assets/testing/dalin.lex")
 
     result = morphology.lookup("0 öka".encode("utf-8"))
     morph = jsonlib.loads(result)

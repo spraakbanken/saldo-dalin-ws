@@ -1,8 +1,8 @@
 from typing import Callable
 
 from fastapi import FastAPI
-from sblex.fm import Morphology
-from sblex.semantic_repository import SemanticRepository
+
+from sblex.fm import MemMorphology
 from sblex.mem_semantic_repository import MemSemanticRepository
 
 
@@ -15,7 +15,7 @@ def create_start_app_handler(app: FastAPI) -> Callable:
 
 
 def load_saldo_morphology(app: FastAPI) -> None:
-    saldo_morphology = Morphology.from_path(app.state.config["SALDO_MORPHOLOGY_PATH"])
+    saldo_morphology = MemMorphology.from_path(app.state.config["SALDO_MORPHOLOGY_PATH"])
     app.state._saldo_morph = saldo_morphology
 
 

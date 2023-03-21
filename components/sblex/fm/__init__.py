@@ -1,4 +1,4 @@
 from sblex.fm import core
-from sblex.fm.morphology import Morphology
+from sblex.fm.morphology import Morphology, MemMorphology
 
-__all__ = ["core", "Morphology"]
+__all__ = ["core", "Morphology", "MemMorphology"]

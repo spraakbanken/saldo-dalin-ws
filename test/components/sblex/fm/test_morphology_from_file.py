@@ -1,11 +1,12 @@
 from json_streams import jsonlib
-from sblex.fm.morphology import Morphology
+
+from sblex.fm.morphology import MemMorphology
 
 
 def test_morphology_exists() -> None:
-    morphology = Morphology.from_path("assets/testing/dalin.lex")
+    morphology = MemMorphology.from_path("assets/testing/dalin.lex")
 
-    result = morphology.lookup("0 öka".encode("utf-8"))
+    result = morphology.lookup_from_bytes("0 öka".encode("utf-8"))
     morph = jsonlib.loads(result)
     expected = {
         "a": [

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
@@ -17,12 +18,14 @@
       location.href='http://spraakbanken.gu.se/ws/saldo-ws/{{ service }}/html/'+encodeURIComponent(word);
      }
    }
+{% if bar %}
    </script>
    <p><a href="https://svn.spraakdata.gu.se/repos/sblex/pub/saldo_instruktion.pdf">dokumentation (pdf)</a></p>
    <p>
    <input type="search" id="input" class="inputclass" value="{{ input }}" size="30" placeholder="Skriv in en ordform" results="10" onchange="input_handler(event)">
    <input type="submit" value="skicka" onchange="input_handler(event)"> </p>
   </center>
+{% endif %}
   <div id="output_table">
   {% block content %}{% endblock %}
   </div>

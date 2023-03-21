@@ -5,12 +5,19 @@ from pathlib import Path
 from typing import Any
 
 from sblex.semantic_repository import SemanticRepository, SemanticRepositoryError
+from sblex.semantic_repository.core import LemmaNotFound
 
 logger = logging.getLogger(__name__)
 
 
 class MemSemanticRepository(SemanticRepository):
-    def __init__(self, *, lex_map, lem_map, path_map):
+    def __init__(
+        self,
+        *,
+        lex_map: dict[str, dict[str, Any]],
+        lem_map: dict[str, dict[str, Any]],
+        path_map: dict[str, list[str]],
+    ):
         self._lex_map = lex_map
         self._lem_map = lem_map
         self._path_map = path_map
@@ -73,16 +80,31 @@ class MemSemanticRepository(SemanticRepository):
                         pth.append(sns)
                 path_map[sense] = pth
 
-            # for l in list(lem_map.keys()):
-            #     (s,p,gf) = lem_map[l]
-            #     lem_map[l] = ('{"l":%s,"p":"%s","gf":"%s"}' % (pr_set(s),p,gf)).encode('UTF-8')
-            # for l in list(lex_map.keys()):
-            #     (m,f,mchildren,pchildren,lemmas) = lex_map[l]
-            #     lex_map[l] = ('{\n "lex":"%s",\n "fm":"%s",\n "fp":"%s",\n "mf":%s,\n "pf":%s,\n "l":%s,\n "path":%s,\n "ppath":%s\n}' % (l,m,f,pr_set(mchildren),pr_set(pchildren),pr_set(lemmas),pr_list(path_map[l]),father_path(f))).encode('UTF-8')
-        return cls(lex_map=lex_map, lem_map=lem_map, path_map=path_map)
+            final_lem_map = {}
+            for lem, values in lem_map.items():
+                (s, p, gf) = values
+                final_lem_map[lem] = {"l": sorted(s), "p": p, "gf": gf}
+            final_lex_map = {}
+            for lex, values in lex_map.items():
+                (m, f, mchildren, pchildren, lemmas) = values
+                final_lex_map[lex] = {
+                    "lex": lex,
+                    "fm": m,
+                    "fp": f,
+                    "mf": sorted(mchildren),
+                    "pf": sorted(pchildren),
+                    "l": lemmas,
+                    "path": path_map[lex],
+                    "ppath": father_path(f, path_map),
+                }
+                #  % (l,m,f,pr_set(mchildren),pr_set(pchildren),pr_set(lemmas),pr_list(path_map[l]),father_path(f))
+        return cls(lex_map=final_lex_map, lem_map=final_lem_map, path_map=path_map)
 
     def get_lemma(self, lemma: str) -> dict[str, Any]:
-        return self.process("lem", lemma)
+        try:
+            return self._lem_map[lemma]
+        except KeyError as exc:
+            raise LemmaNotFound(lemma) from exc
 
     def get_lexeme(self, lexeme: str) -> dict[str, Any]:
         return self.process("lex", lexeme)
@@ -107,6 +129,14 @@ class MemSemanticRepository(SemanticRepository):
             raise UnknownCommand(command)
         except:
             return []
+
+
+def father_path(fathers, path_map: dict[str, Any]) -> list:
+    result = []
+    for s in fathers.split(" "):
+        if s != "PRIM..1" and s != "":
+            result.append(path_map[s])
+    return result
 
 
 class UnknownCommand(Exception):

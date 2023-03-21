@@ -20,7 +20,7 @@ router = APIRouter()
 @router.get("/json/{lid}")
 async def lookup_lid_json(
     lid: Union[Lexeme, Lemma],
-    semantic_repo: SemanticRepository = Depends(# noqa: B008
+    semantic_repo: SemanticRepository = Depends(  # noqa: B008
         deps.get_saldo_semantic_repo
     ),
 ):
@@ -43,15 +43,11 @@ async def lookup_lid_xml(
     return lid
 
 
-@router.get(
-    "/html/{lid}",
-    response_class=HTMLResponse,
-    name="saldo-ws:lid-html"
-)
+@router.get("/html/{lid}", response_class=HTMLResponse, name="saldo-ws:lid-html")
 async def lookup_lid_html(
     request: Request,
-    lid: Lexeme,
-    semantic_repo: SemanticRepository = Depends(# noqa: B008
+    lid: Union[Lemma,Lexeme],
+    semantic_repo: SemanticRepository = Depends(  # noqa: B008
         deps.get_saldo_semantic_repo
     ),
 ):
@@ -60,7 +56,10 @@ async def lookup_lid_html(
 
     print(f"{lexeme_or_lemma=}")
     if lexeme_or_lemma == []:
-        return templates.TemplateResponse("saldo_lid_saknas.html", context={"request": request, "lid": lid, "bar": False})
+        return templates.TemplateResponse(
+            "saldo_lid_saknas.html",
+            context={"request": request, "lid": lid, "bar": False},
+        )
 
     return f"{lexeme_or_lemma}"
 

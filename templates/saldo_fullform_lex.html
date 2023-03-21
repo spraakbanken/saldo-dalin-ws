@@ -1,0 +1,29 @@
+{% extends "saldo_document.html" %}
+{% block content %}
+<center><h1>segment: {{ segment }}</h1>
+<p><a href="http://spraakbanken.gu.se/ws/saldo-ws/sms/html/{{ segment }}">sammansättningsanalys</a></p>
+<table border="1">
+{% if j|length %}
+<tr><th>gf</th><th>id</th><th>pos</th><th>is</th><th>msd</th><th>p</th></tr>
+{% for json in j %}
+<tr>
+<td>
+{% for lid in json["id"] %}
+<a href="{{ url_for("saldo-ws:lid-html", lid=lid) }}">{{ lid }}</a>
+{% endfor %}
+</td><td>
+{% for lid in json["fm"] %}
+<a href="{{ url_for("saldo-ws:lid-html", lid=lid) }}">{{ lid }}</a>
+{% endfor %}
+{% if json["fp"] != "PRIM..1" %}
++
+{% endif %}
+
+
+</tr>
+{% endfor %}
+{% else %}
+<tr><td>ordet saknas i lexikonet</td></tr>
+{% endif %}
+</table></center>
+{% endblock %}

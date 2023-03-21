@@ -5,6 +5,7 @@ from json_streams import jsonlib
 
 logger = logging.getLogger(__name__)
 
+
 class Trie:
     def __init__(self, trie: dict[int, tuple[dict[str, int], bytes]]) -> None:
         self._trie: dict[int, tuple[dict[str, int], bytes]] = trie
@@ -26,11 +27,10 @@ class Trie:
             trie_builder.insert(w, jsonlib.dumps(a))
 
         logger.info(
-            "number of word forms read: %d",
-            trie_builder.number_of_insertions())
+            "number of word forms read: %d", trie_builder.number_of_insertions()
+        )
         logger.info("initiating precomputation...")
         return trie_builder.build()
-
 
     def lookup(self, word: str, start_state=0) -> bytes:
         st = start_state  # traversal state
@@ -40,12 +40,6 @@ class Trie:
             except:
                 return b""
         return self._trie[st][1]
-
-
-
-
-
-
 
     def lookup_dict(self, word: str, start_state: int = 0) -> dict[str, Any]:
         # traversal state
@@ -101,7 +95,7 @@ class TrieBuilder:
             cont = ("".join(self.continuation(i))).encode("UTF-8")
             trie_precomputed[i] = (
                 tr,
-                b'{\n"a":[%s],\n"c":"%s"}' % (ys, cont),
+                b'{"a":[%s],"c":"%s"}' % (ys, cont),
             )
         return trie_precomputed
 
@@ -112,4 +106,3 @@ class TrieBuilder:
         trie = self.precompute()
         logger.info("precomputing: done")
         return Trie(trie=trie)
-

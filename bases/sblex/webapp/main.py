@@ -39,8 +39,12 @@ def create_app(config: dict | None = None):
 def load_config() -> dict[str, Any]:
     load_dotenv(".env", verbose=True)
     return {
-        "SALDO_MORPHOLOGY_PATH": os.environ.get("SALDO_MORPHOLOGY_PATH","assets/testing/saldo.lex"),
-        "SALDO_SEMANTIC_PATH": os.environ.get("SALDO_SEMANTIC_PATH", "assets/testing/saldo.txt"),
+        "SALDO_MORPHOLOGY_PATH": os.environ.get(
+            "SALDO_MORPHOLOGY_PATH", "assets/testing/saldo.lex"
+        ),
+        "SALDO_SEMANTIC_PATH": os.environ.get(
+            "SALDO_SEMANTIC_PATH", "assets/testing/saldo.txt"
+        ),
     }
 
 

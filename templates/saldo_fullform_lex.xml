@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result>
+{% for x in j %}
+    <a><id>{{ x["id"] }}</id><fm>{{ x["fm"] }}</fm><fp>{{ x["fp"] }}</fp><l>{{ x["l"] }}</l><gf>{{ x["gf"] }}</gf><p>{{ x["p"] }}</p></a>
+{% endfor %}
+</result>

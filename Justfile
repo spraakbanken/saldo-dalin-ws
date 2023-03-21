@@ -28,12 +28,12 @@ test-w-coverage +tests="test":
 
 # lint all code
 lint:
-	{{INVENV}} ruff bases components
+	{{INVENV}} ruff components bases sblex test
 
 # format all python files
 fmt:
-	{{INVENV}} black .
+	{{INVENV}} black components bases sblex test
 
 # check formatting for all python files
 check-fmt:
-	{{INVENV}} black --check .
+	{{INVENV}} black --check components bases sblex test

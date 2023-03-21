@@ -23,30 +23,7 @@ def function(format, segment):
                 ),
                 apache.OK,
             )
-        result = ""
-        lemmas = set(
-            [
-                (x["id"], x["gf"], x["p"])
-                for x in saldo_util.lookup_ff(segment)
-                if not (x["msd"] in ["ci", "cm", "c"] or x["pos"][-1] == "h")
-            ]
-        )
-        list = []
-        for (lem, gf, p) in lemmas:
-            lemma = utf8.e(lem)
-            lexemes = saldo_util.lookup_lid(lemma)["l"]
-            for lex in lexemes:
-                lexeme = utf8.e(lex)
-                lexdata = saldo_util.lookup_lid(lexeme)
-                try:
-                    list.append(
-                        '{"id":"%s","fm":"%s","fp":"%s","l":"%s","gf":"%s","p":"%s"}'
-                        % (lex, lexdata["fm"], lexdata["fp"], lem, gf, p)
-                    )
-                except:
-                    raise Exception(utf8.e(lex))
-        list.sort()
-        result = utf8.e("[" + ",\n ".join(list) + "]")
+
         if format == "xml":
             result = xmlize(segment, result)
         elif format == "html":
@@ -55,19 +32,6 @@ def function(format, segment):
     except:
         result_code = apache.HTTP_SERVICE_UNAVAILABLE
     return (result, result_code)
-
-
-def xmlize(segment, s):
-    j = cjson.decode(utf8.d(s))
-    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-    xml += "<result>\n"
-    for x in j:
-        xml += (
-            "<a><id>%s</id><fm>%s</fm><fp>%s</fp><l>%s</l><gf>%s</gf><p>%s</p></a>"
-            % (x["id"], x["fm"], x["fp"], x["l"], x["gf"], x["p"])
-        )
-    xml += "</result>\n"
-    return utf8.e(xml)
 
 
 def htmlize(segment, s):

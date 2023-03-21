@@ -1,7 +1,10 @@
 import abc
+import logging
 from typing import Any
 
 from sblex.predicates import is_lemma, is_lexeme
+
+logger = logging.getLogger(__name__)
 
 
 class SemanticRepository(abc.ABC):
@@ -29,8 +32,10 @@ class SemanticRepository(abc.ABC):
 
     def get_by_lid(self, lid: str) -> dict[str, Any]:
         if is_lemma(lid):
+            logger.debug("calling SemanticRepository.get_lemma for '%s'", lid)
             return self.get_lemma(lid)
         elif is_lexeme(lid):
+            logger.debug("calling SemanticRepository.get_lexeme for '%s'", lid)
             return self.get_lexeme(lid)
         else:
             return {}
@@ -53,3 +58,11 @@ class SemanticRepository(abc.ABC):
 
 class SemanticRepositoryError(Exception):
     """Raised when the SemanticRepository fails."""
+
+
+class LemmaNotFound(SemanticRepositoryError, KeyError):
+    """Raised when a Lemma is not found."""
+
+
+class LexemeNotFound(SemanticRepositoryError, KeyError):
+    """Raised when a Lexeme is not found."""

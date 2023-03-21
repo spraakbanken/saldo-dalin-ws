@@ -8,3 +8,4 @@ A..1	initial..1	PRIM..1	A..nn.1	A	nn	nn_vn_alfa_abc
 a..2	ton..1	PRIM..1	a..nn.1	a	nn	nn_vn_alfa_abc
 A3..1	pappersark..1	PRIM..1	a3..nna.1	a3	nna	nna_0n_hk
 A3..1	pappersark..1	PRIM..1	A3..nna.1	A3	nna	nna_0n_hk
+dväljas..1	bo..1	PRIM..1	dväljas..vb.1	dväljas	vb	vb_vs_dväljas

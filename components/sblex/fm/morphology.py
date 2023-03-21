@@ -20,6 +20,7 @@ class Morphology(abc.ABC):
     def lookup_from_bytes(self, s: bytes) -> bytes:
         ...
 
+
 class MemMorphology(Morphology):
     def __init__(self, trie: Trie) -> None:
         self._trie = trie
@@ -27,7 +28,9 @@ class MemMorphology(Morphology):
     @classmethod
     def from_path(cls, fname: str) -> "Morphology":
         logger.info("building morphology structure... (takes about 1 minute)")
-        return cls(trie=Trie.from_iter(json_streams.load_from_file(fname, json_format="jsonl")))
+        return cls(
+            trie=Trie.from_iter(json_streams.load_from_file(fname, json_format="jsonl"))
+        )
 
     def lookup(self, word: str, n: int = 0) -> bytes:
         return r if (r := self._trie.lookup(word, n)) else b'{"id":"0","a":[],"c":""}'

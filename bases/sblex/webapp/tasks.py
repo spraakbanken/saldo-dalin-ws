@@ -15,8 +15,7 @@ def create_start_app_handler(app: FastAPI) -> Callable:
 
 
 def load_saldo_morphology(app: FastAPI) -> None:
-    saldo_morphology = Morphology(app.state.config["SALDO_MORPHOLOGY_PATH"])
-    saldo_morphology.build()
+    saldo_morphology = Morphology.from_path(app.state.config["SALDO_MORPHOLOGY_PATH"])
     app.state._saldo_morph = saldo_morphology
 
 

@@ -106,7 +106,7 @@ class MemSemanticRepository(SemanticRepository):
                 return relations(key)
             raise UnknownCommand(command)
         except:
-            return "[]"
+            return []
 
 
 class UnknownCommand(Exception):

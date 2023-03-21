@@ -32,6 +32,8 @@ typer = "^0.7.0"
 python-dotenv = "^1.0.0"
 json_streams = "^0.12.4"
 jinja2 = "^3.1.2"
+asgi-correlation-id = "^4.1.0"
+python-json-logger = "^2.0.7"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.2.0"
